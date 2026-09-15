@@ -209,14 +209,15 @@ async function sendToGoogleForm(data) {
     const contact = document.getElementById('fContact').value.trim() || null;
 
     if (!text) { showStatus('err','Будь ласка, напишіть своє питання.'); document.getElementById('fQuestion').focus(); return; }
-    if (!db)   { showStatus('err','Сервіс тимчасово недоступний.'); return; }
 
     const btn = document.getElementById('submitBtn');
     btn.disabled = true; btn.textContent = '...';
     try {
-      const id = `${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
-      await db.doc(`questions/${id}`).set({text, name, contact, createdAt: Date.now()});
       await sendToGoogleForm({name, contact, text});
+      if (db) {
+        const id = `${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
+        await db.doc(`questions/${id}`).set({text, name, contact, createdAt: Date.now()});
+      }
       document.getElementById('qForm').reset();
       document.getElementById('charHint').textContent = '0 / 1200';
       showStatus('ok','Питання надіслано! Куратор відповість на найближчому ефірі.');
