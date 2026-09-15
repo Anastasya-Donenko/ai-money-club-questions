@@ -1,0 +1,227 @@
+<title>AI Money Club — Питання</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#070A10;--card:#111825;--card2:#0E141E;
+  --line:rgba(255,255,255,.08);--line-strong:rgba(255,255,255,.15);
+  --tx:#EAF1F8;--tx-dim:#93A2B6;--tx-mute:#5F7085;
+  --tiff:#2FE0C7;--tiff-deep:#12B39C;--gold:#F0C255;
+  --input-bg:#0B1020;--radius:18px;--maxw:700px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg);overflow-x:hidden}
+body{
+  background:var(--bg);color:var(--tx);min-height:100vh;
+  font-family:'Manrope',system-ui,-apple-system,sans-serif;
+  line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(700px 420px at 85% -5%,rgba(47,224,199,.12),transparent 65%),
+    radial-gradient(600px 380px at -10% 20%,rgba(79,163,255,.07),transparent 65%),
+    radial-gradient(700px 500px at 50% 110%,rgba(240,194,85,.08),transparent 65%);
+}
+h1{font-family:'Unbounded','Arial Black',sans-serif;font-weight:800;letter-spacing:-.03em;text-wrap:balance}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
+
+/* ── Hero ── */
+.hero{padding:28px 0 20px;text-align:center}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:'Unbounded',sans-serif;font-weight:600;
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--tiff);
+  border:1px solid rgba(47,224,199,.35);border-radius:100px;padding:7px 14px;
+  background:rgba(47,224,199,.06);
+}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--tiff);box-shadow:0 0 10px var(--tiff);flex:none}
+.hero h1{font-size:clamp(26px,6vw,42px);line-height:1.07;margin:12px auto 0}
+.hero h1 .grad{
+  background:linear-gradient(105deg,var(--tiff),var(--gold));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;display:inline-block;
+}
+.hero-sub{color:var(--tx-dim);font-size:clamp(13px,2.5vw,15px);max-width:50ch;margin:10px auto 0;line-height:1.6;text-wrap:pretty}
+.hero-sub b{color:var(--tx)}
+
+/* ── Card ── */
+.card{
+  background:linear-gradient(180deg,var(--card),var(--card2));
+  border:1px solid var(--line-strong);border-radius:var(--radius);
+  padding:22px 22px 20px;position:relative;overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--tiff);border-radius:var(--radius) 0 0 var(--radius);
+}
+.card-head{display:flex;align-items:center;gap:9px;margin-bottom:16px}
+.card-icon{font-size:18px;line-height:1}
+.card-title{font-family:'Unbounded',sans-serif;font-weight:700;font-size:13.5px;letter-spacing:-.02em}
+
+/* ── Fields ── */
+.fields{display:flex;flex-direction:column;gap:11px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field{display:flex;flex-direction:column;gap:4px}
+.flabel{font-family:'Unbounded',sans-serif;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx-mute);font-weight:700}
+.flabel .req{color:var(--tiff);margin-left:2px}
+.finput,.ftextarea{
+  background:var(--input-bg);border:1px solid var(--line-strong);
+  border-radius:9px;color:var(--tx);
+  font-family:'Manrope',system-ui,sans-serif;font-size:14px;
+  padding:9px 12px;width:100%;outline:none;
+  transition:border-color .15s,box-shadow .15s;
+}
+.finput::placeholder,.ftextarea::placeholder{color:var(--tx-mute)}
+.finput:focus,.ftextarea:focus{border-color:var(--tiff);box-shadow:0 0 0 3px rgba(47,224,199,.15)}
+.ftextarea{resize:none;height:90px}
+.char-hint{font-size:9px;color:var(--tx-mute);text-align:right;margin-top:2px;font-family:'Unbounded',sans-serif;letter-spacing:.04em}
+
+/* ── Footer ── */
+.form-bottom{display:flex;justify-content:flex-end;margin-top:14px}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;
+  color:#04120F;background:linear-gradient(180deg,var(--tiff),var(--tiff-deep));
+  padding:12px 24px;border-radius:100px;border:0;cursor:pointer;
+  box-shadow:0 10px 28px -8px rgba(47,224,199,.55);transition:transform .14s,opacity .14s;
+}
+.btn:hover:not(:disabled){transform:translateY(-2px)}
+.btn:active:not(:disabled){transform:scale(.97)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Status ── */
+.form-status{border-radius:10px;font-size:13px;padding:10px 14px;margin-top:16px;display:none;line-height:1.5}
+.form-status.ok{display:block;background:rgba(47,224,199,.09);color:var(--tiff);border:1px solid rgba(47,224,199,.28)}
+.form-status.err{display:block;background:rgba(248,113,113,.08);color:#F87171;border:1px solid rgba(248,113,113,.22)}
+
+/* ── Responsive ── */
+@media(max-width:600px){
+  .wrap{padding:0 12px}
+  .hero{padding:20px 0 14px}
+  .card{padding:18px 16px}
+  .field-row{grid-template-columns:1fr}
+  .form-bottom{justify-content:stretch}
+  .btn{justify-content:center;width:100%}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+*:focus-visible{outline:2px solid var(--tiff);outline-offset:2px;border-radius:6px}
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <span class="eyebrow"><span class="dot"></span>AI Money Club · учасники 6 та 12 місяців</span>
+    <h1>Запитай куратора <span class="grad">напряму</span></h1>
+    <p class="hero-sub">Залишай питання та запити на VIP-розбори — куратор відповість на найближчому ефірі. <b>Жодне питання не залишається без відповіді.</b></p>
+  </header>
+
+  <div class="card">
+    <div class="card-head">
+      <span class="card-icon">💬</span>
+      <span class="card-title">Питання куратору</span>
+    </div>
+    <form id="qForm" novalidate>
+      <div class="fields">
+        <div class="field-row">
+          <div class="field">
+            <label class="flabel" for="fName">Ім'я</label>
+            <input class="finput" type="text" id="fName" placeholder="Ім'я" maxlength="80" autocomplete="name">
+          </div>
+          <div class="field">
+            <label class="flabel" for="fContact">Телеграм</label>
+            <input class="finput" type="text" id="fContact" placeholder="@username" maxlength="120">
+          </div>
+        </div>
+        <div class="field">
+          <label class="flabel" for="fQuestion">Ваше питання <span class="req">*</span></label>
+          <textarea class="ftextarea" id="fQuestion" placeholder="Введіть ваше питання до куратора..." maxlength="1200" required></textarea>
+          <div class="char-hint" id="charHint">0 / 1200</div>
+        </div>
+      </div>
+      <div class="form-bottom">
+        <button type="submit" class="btn" id="submitBtn">
+          <svg viewBox="0 0 14 14"><path d="M13 1 1 7l12 6-4-6 4-6Z"/></svg>
+          Надіслати
+        </button>
+      </div>
+      <div class="form-status" id="qStatus" role="alert"></div>
+    </form>
+  </div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   GOOGLE FORM INTEGRATION
+   1. Створи Google-форму: ім'я, контакт, питання
+   2. Тестове заповнення → F12 → Network → formResponse
+   3. Скопіюй URL і entry.XXXXXXX для кожного поля
+   4. Постав enabled: true
+   ═══════════════════════════════════════════════════════ */
+const GF = {
+  enabled: true,
+  url: 'https://docs.google.com/forms/d/e/1FAIpQLSe6uVv6pIq39NfXJZpiz38CeSzMEZ5ocCeozCAbBQy_3_b-2Q/formResponse',
+  fields: {
+    name:    'entry.1563257815',
+    contact: 'entry.1546361531',
+    text:    'entry.1541505008',
+  }
+};
+
+async function sendToGoogleForm(data) {
+  if (!GF.enabled) return;
+  try {
+    const fd = new FormData();
+    Object.entries(data).forEach(([k,v]) => { if (GF.fields[k] && v != null) fd.append(GF.fields[k], String(v)); });
+    await fetch(GF.url, {method:'POST', mode:'no-cors', body:fd});
+  } catch {}
+}
+
+(async () => {
+  const db = await claude.use("db");
+
+  document.getElementById('fQuestion').addEventListener('input', e => {
+    document.getElementById('charHint').textContent = `${e.target.value.length} / 1200`;
+  });
+
+  function esc(str) {
+    const d = document.createElement('div');
+    d.appendChild(document.createTextNode(String(str??'')));
+    return d.innerHTML;
+  }
+  function showStatus(type, msg) {
+    const el = document.getElementById('qStatus');
+    el.className = `form-status ${type}`;
+    el.textContent = msg;
+    if (type==='ok') setTimeout(()=>{el.className='form-status';el.textContent='';}, 5000);
+  }
+
+  document.getElementById('qForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const text    = document.getElementById('fQuestion').value.trim();
+    const name    = document.getElementById('fName').value.trim() || null;
+    const contact = document.getElementById('fContact').value.trim() || null;
+
+    if (!text) { showStatus('err','Будь ласка, напишіть своє питання.'); document.getElementById('fQuestion').focus(); return; }
+    if (!db)   { showStatus('err','Сервіс тимчасово недоступний.'); return; }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true; btn.textContent = '...';
+    try {
+      const id = `${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
+      await db.doc(`questions/${id}`).set({text, name, contact, createdAt: Date.now()});
+      await sendToGoogleForm({name, contact, text});
+      document.getElementById('qForm').reset();
+      document.getElementById('charHint').textContent = '0 / 1200';
+      showStatus('ok','Питання надіслано! Куратор відповість на найближчому ефірі.');
+    } catch { showStatus('err','Помилка надсилання. Спробуйте ще раз.'); }
+    finally  { btn.disabled=false; btn.innerHTML='<svg viewBox="0 0 14 14"><path d="M13 1 1 7l12 6-4-6 4-6Z"/></svg>Надіслати'; }
+  });
+})();
+</script>
