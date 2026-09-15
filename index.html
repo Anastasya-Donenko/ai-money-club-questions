@@ -168,6 +168,7 @@ const GF = {
   enabled: true,
   url: 'https://docs.google.com/forms/d/e/1FAIpQLSe6uVv6pIq39NfXJZpiz38CeSzMEZ5ocCeozCAbBQy_3_b-2Q/formResponse',
   fields: {
+    date:    'entry.1897503963',
     name:    'entry.1563257815',
     contact: 'entry.1546361531',
     text:    'entry.1541505008',
@@ -220,7 +221,8 @@ function sendToGoogleForm(data) {
     const btn = document.getElementById('submitBtn');
     btn.disabled = true; btn.textContent = '...';
     try {
-      await sendToGoogleForm({name, contact, text});
+      const today = new Date().toLocaleDateString('uk-UA', {day:'2-digit',month:'2-digit',year:'numeric'});
+      await sendToGoogleForm({date: today, name, contact, text});
       if (db) {
         const id = `${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
         await db.doc(`questions/${id}`).set({text, name, contact, createdAt: Date.now()});
