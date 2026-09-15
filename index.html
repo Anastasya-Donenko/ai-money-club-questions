@@ -174,15 +174,20 @@ const GF = {
   }
 };
 
-async function sendToGoogleForm(data) {
-  if (!GF.enabled) return;
-  try {
-    const fd = new FormData();
+function sendToGoogleForm(data) {
+  if (!GF.enabled) return Promise.resolve();
+  return new Promise(resolve => {
+    const iframeName = 'gf_' + Date.now();
+    const iframe = Object.assign(document.createElement('iframe'), {name: iframeName, style: 'display:none'});
+    const form = Object.assign(document.createElement('form'), {method:'POST', action: GF.url, target: iframeName, style:'display:none'});
     Object.entries(GF.fields).forEach(([k, entryId]) => {
-      fd.append(entryId, data[k] ? String(data[k]) : '');
+      const input = Object.assign(document.createElement('input'), {type:'hidden', name: entryId, value: data[k] ? String(data[k]) : ''});
+      form.appendChild(input);
     });
-    await fetch(GF.url, {method:'POST', mode:'no-cors', body:fd});
-  } catch {}
+    document.body.append(iframe, form);
+    form.submit();
+    setTimeout(() => { iframe.remove(); form.remove(); resolve(); }, 2000);
+  });
 }
 
 (async () => {
