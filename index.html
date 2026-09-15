@@ -191,7 +191,7 @@ function sendToGoogleForm(data) {
 }
 
 (async () => {
-  const db = await claude.use("db");
+  const db = typeof claude !== 'undefined' ? await claude.use("db") : null;
 
   document.getElementById('fQuestion').addEventListener('input', e => {
     document.getElementById('charHint').textContent = `${e.target.value.length} / 1200`;
