@@ -178,7 +178,9 @@ async function sendToGoogleForm(data) {
   if (!GF.enabled) return;
   try {
     const fd = new FormData();
-    Object.entries(data).forEach(([k,v]) => { if (GF.fields[k] && v != null) fd.append(GF.fields[k], String(v)); });
+    Object.entries(GF.fields).forEach(([k, entryId]) => {
+      fd.append(entryId, data[k] ? String(data[k]) : '');
+    });
     await fetch(GF.url, {method:'POST', mode:'no-cors', body:fd});
   } catch {}
 }
