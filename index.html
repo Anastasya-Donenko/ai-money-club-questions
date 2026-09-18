@@ -100,6 +100,18 @@ h1{font-family:'Unbounded','Arial Black',sans-serif;font-weight:800;letter-spaci
 .form-status.ok{display:block;background:rgba(47,224,199,.09);color:var(--tiff);border:1px solid rgba(47,224,199,.28)}
 .form-status.err{display:block;background:rgba(248,113,113,.08);color:#F87171;border:1px solid rgba(248,113,113,.22)}
 
+/* ── Success screen ── */
+.success-screen{display:none;text-align:center;padding:32px 20px 28px;}
+.success-screen.show{display:block;}
+.success-icon{font-size:52px;line-height:1;margin-bottom:16px;}
+.success-title{font-family:'Unbounded',sans-serif;font-weight:800;font-size:clamp(20px,5vw,28px);letter-spacing:-.03em;margin-bottom:10px;}
+.success-title .grad{background:linear-gradient(105deg,var(--tiff),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;display:inline-block;}
+.success-sub{color:var(--tx-dim);font-size:14px;line-height:1.65;max-width:38ch;margin:0 auto 24px;}
+.success-sub b{color:var(--tx);}
+.success-badge{display:inline-flex;align-items:center;gap:8px;font-family:'Unbounded',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--tiff);border:1px solid rgba(47,224,199,.3);border-radius:100px;padding:8px 16px;background:rgba(47,224,199,.06);}
+.success-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--tiff);box-shadow:0 0 8px var(--tiff);flex:none;animation:pulse 1.8s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+
 /* ── Responsive ── */
 @media(max-width:600px){
   .wrap{padding:0 12px}
@@ -121,7 +133,7 @@ h1{font-family:'Unbounded','Arial Black',sans-serif;font-weight:800;letter-spaci
     <p class="hero-sub">Залишай питання та запити на АІ-розбір/сесію — куратор відповість на найближчому ефірі. <b>Жодне питання не залишається без відповіді.</b></p>
   </header>
 
-  <div class="card">
+  <div class="card" id="formCard">
     <div class="card-head">
       <span class="card-icon">💬</span>
       <span class="card-title">Питання куратору</span>
@@ -152,6 +164,13 @@ h1{font-family:'Unbounded','Arial Black',sans-serif;font-weight:800;letter-spaci
       </div>
       <div class="form-status" id="qStatus" role="alert"></div>
     </form>
+  </div>
+
+  <div class="card success-screen" id="successScreen">
+    <div class="success-icon">✅</div>
+    <div class="success-title">Питання <span class="grad">прийнято!</span></div>
+    <p class="success-sub">Куратор розгляне його на найближчому ефірі. <b>Жодне питання не залишається без відповіді.</b></p>
+    <span class="success-badge"><span class="dot"></span>Очікуй відповідь на ефірі</span>
   </div>
 
 </div>
@@ -199,12 +218,10 @@ document.getElementById('qForm').addEventListener('submit', async function(e) {
 
   try {
     await submitToGoogleForm({ date: today, name: name, contact: contact, text: text });
-    document.getElementById('qForm').reset();
-    document.getElementById('charHint').textContent = '0 / 1200';
-    showStatus('ok', 'Питання надіслано! Куратор відповість на найближчому ефірі. ✓');
+    document.getElementById('formCard').style.display = 'none';
+    document.getElementById('successScreen').classList.add('show');
   } catch(err) {
     showStatus('err', 'Помилка. Спробуйте ще раз.');
-  } finally {
     btn.disabled = false;
     btn.innerHTML = '<svg viewBox="0 0 14 14"><path d="M13 1 1 7l12 6-4-6 4-6Z"/></svg>Надіслати';
   }
