@@ -217,14 +217,9 @@ document.getElementById('qForm').addEventListener('submit', async function(e) {
 
   const today = new Date().toLocaleDateString('uk-UA', {day:'2-digit', month:'2-digit', year:'numeric'});
 
-  try {
-    await submitToGoogleForm({ date: today, name: name, contact: contact, text: text });
-    document.getElementById('formCard').style.display = 'none';
-    document.getElementById('successScreen').classList.add('show');
-  } catch(err) {
-    showStatus('err', 'Помилка. Спробуйте ще раз.');
-    btn.disabled = false;
-    btn.innerHTML = '<svg viewBox="0 0 14 14"><path d="M13 1 1 7l12 6-4-6 4-6Z"/></svg>Надіслати';
-  }
+  // Show success immediately — request runs in background
+  document.getElementById('formCard').style.display = 'none';
+  document.getElementById('successScreen').classList.add('show');
+  submitToGoogleForm({ date: today, name: name, contact: contact, text: text });
 });
 </script>
