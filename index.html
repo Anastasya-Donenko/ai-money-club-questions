@@ -118,7 +118,7 @@ h1{font-family:'Unbounded','Arial Black',sans-serif;font-weight:800;letter-spaci
   <header class="hero">
     <span class="eyebrow"><span class="dot"></span>AI Money Club · учасники 6 та 12 місяців</span>
     <h1>Запитай куратора <span class="grad">напряму</span></h1>
-    <p class="hero-sub">Залишай питання та запити на VIP-розбори — куратор відповість на найближчому ефірі. <b>Жодне питання не залишається без відповіді.</b></p>
+    <p class="hero-sub">Залишай питання та запити на VIP АІ-розбір / сесія — куратор відповість на найближчому ефірі. <b>Жодне питання не залишається без відповіді.</b></p>
   </header>
 
   <div class="card">
@@ -176,13 +176,25 @@ function submitToGoogleForm(data) {
     form.action = GF_URL;
     form.target = frameName;
     form.style.display = 'none';
+
+    // Google Forms requires these extra params
+    const allParams = {
+      'fvv': '1',
+      'fbzx': String(Math.floor(Math.random() * 9e18)),
+      'pageHistory': '0',
+    };
     Object.entries(GF_FIELDS).forEach(([entryId, key]) => {
+      allParams[entryId] = data[key] || '';
+    });
+
+    Object.entries(allParams).forEach(([name, value]) => {
       const inp = document.createElement('input');
       inp.type = 'hidden';
-      inp.name = entryId;
-      inp.value = data[key] || '';
+      inp.name = name;
+      inp.value = value;
       form.appendChild(inp);
     });
+
     document.body.appendChild(iframe);
     document.body.appendChild(form);
     form.submit();
